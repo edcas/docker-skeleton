@@ -1,0 +1,39 @@
+version: "3.2"
+
+services:
+  nginx:
+    container_name: nginx
+    build:
+      args:
+        - PHP_UPSTREAM_CONTAINER
+        - PHP_UPSTREAM_PORT
+      context: ./docker/nginx
+    depends_on:
+      - ${PHP_UPSTREAM_CONTAINER}
+    networks:
+      placetopaynet:
+        ipv4_address: 65.45.30.10
+
+  php:
+    container_name: php
+    build:
+      args:
+      - BITBUCKET_CONSUMER_KEY
+      - BITBUCKET_CONSUMER_SECRET
+      - PHP_UPSTREAM_PORT
+      context: ./
+      dockerfile: ./docker/php71/Dockerfile
+    networks:
+      placetopaynet:
+        ipv4_address: 65.45.30.11
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    networks:
+      placetopaynet:
+        ipv4_address: 65.45.30.13
+
+networks:
+  placetopaynet:
+    external: true

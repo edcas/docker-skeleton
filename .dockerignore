@@ -1,0 +1,11 @@
+.git
+.idea
+.dockerignore
+.gitignore
+docker-*
+vendor
+storage/framework/cache/**
+storage/logs/**
+Makefile
+README.md
+tests/**

@@ -1,0 +1,32 @@
+version: '3.2'
+
+services:
+  nginx:
+    volumes:
+      - source: .
+        target: /var/www/html
+        type: bind
+
+  php:
+    volumes:
+      - source: .
+        target: /var/www/html
+        type: bind
+
+  db:
+    container_name: db
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+     - data:/var/lib/mysql
+    networks:
+      placetopaynet:
+        ipv4_address: 65.45.30.12
+
+volumes:
+  data:
+    driver: local
